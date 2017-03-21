@@ -34,14 +34,14 @@ class GameViewController: UIViewController, SCNSceneRendererDelegate {
         gmView.allowsCameraControl = true
         gmView.autoenablesDefaultLighting = false
         gmView.delegate = self
+        gmView.showsStatistics = true
     }
     
     func init_scene()
     {
-        gmScene = SCNScene(named: "art.scnassets/ship.scn")!
-        let ship = gmScene.rootNode.childNode(withName: "ship", recursively: true)!
-        ship.physicsBody = SCNPhysicsBody(type: .static, shape: nil)
-        ship.position = SCNVector3(0, 10, 0)
+        gmScene = SCNScene(named: "art.scnassets/spaceship.scn")!
+        let model = gmScene.rootNode.childNode(withName: "pCube1", recursively: true)!
+        model.position = SCNVector3(0, 10, 0)
         gmView.scene = gmScene
         gmView.isPlaying = true
     }
@@ -73,24 +73,24 @@ class GameViewController: UIViewController, SCNSceneRendererDelegate {
         gmScene.rootNode.addChildNode(light)
     }
     
-    func add_objects(i: TimeInterval)
+    func add_objects()
     {
-        let j: Int = Int(i.truncatingRemainder(dividingBy: 90))
-        let obj:SCNGeometry = rand_shape(j: j)
+        let obj:SCNGeometry = rand_shape()
         let randcolor = rand_color()
         obj.materials.first?.diffuse.contents = randcolor
+        obj.materials.first?.specular.contents = UIColor.white
         let objNode = SCNNode(geometry: obj)
         objNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
-        objNode.rotation = SCNVector4Make(0, 1, 0, Float(j))
+        objNode.position = SCNVector3Make(0, 5, 0)
         gmScene.rootNode.addChildNode(objNode)
         let randforce = arc4random_uniform(2) == 1 ? -1 : 1
-        let force = SCNVector3(randforce, 20, 0)
+        let force = SCNVector3(randforce, 15, 0)
         objNode.physicsBody?.applyForce(force, at: SCNVector3(0.05, 0.05, 0.05), asImpulse: true)
     }
     
-    func rand_shape(j: Int) -> SCNGeometry
+    func rand_shape() -> SCNGeometry
     {
-        let i: Int = Int(j % 5)
+        let i = arc4random_uniform(5)
         var obj = SCNGeometry()
         if i == 0
         {
@@ -102,15 +102,15 @@ class GameViewController: UIViewController, SCNSceneRendererDelegate {
         }
         else if i == 2
         {
-            obj = SCNCone(topRadius: 1, bottomRadius: 0, height: 1)
+            obj = SCNPyramid(width: 1, height: 1, length: 1)
         }
         else if i == 3
         {
-            obj = SCNSphere(radius: 1)
+            obj = SCNSphere(radius: 0.5)
         }
         else if i == 4
         {
-            obj = SCNCylinder(radius: 1, height: 1)
+            obj = SCNCylinder(radius: 0.5, height: 1)
         }
         return obj
     }
@@ -146,13 +146,9 @@ class GameViewController: UIViewController, SCNSceneRendererDelegate {
     
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
         if time > t {
-            var i:Int = 0
-            while i < 5
-            {
-                add_objects(i: t)
-                i += 1
-            }
-            t = time + 0.2
+            add_objects()
+            
+            t = time + 0.4
         }
     }
     
