@@ -23,7 +23,6 @@ class GameViewController: UIViewController, SCNSceneRendererDelegate {
         
         init_view()
         init_scene()
-        init_cam()
         add_plane()
         add_light()
     }
@@ -41,16 +40,13 @@ class GameViewController: UIViewController, SCNSceneRendererDelegate {
     {
         gmScene = SCNScene(named: "art.scnassets/spaceship.scn")!
         let model = gmScene.rootNode.childNode(withName: "pCube1", recursively: true)!
-        model.position = SCNVector3(0, 10, 0)
+        model.position = SCNVector3(0, 5, 0)
+        let targetPos = SCNVector3Make(model.position.x, 10, model.position.z + 20)
         gmView.scene = gmScene
         gmView.isPlaying = true
-    }
-
-    func init_cam()
-    {
         gmCam = SCNNode()
         gmCam.camera = SCNCamera()
-        gmCam.position = SCNVector3(0, 0, 30)
+        gmCam.position = targetPos
         gmScene.rootNode.addChildNode(gmCam)
     }
     
@@ -81,11 +77,10 @@ class GameViewController: UIViewController, SCNSceneRendererDelegate {
         obj.materials.first?.specular.contents = UIColor.white
         let objNode = SCNNode(geometry: obj)
         objNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
-        objNode.position = SCNVector3Make(0, 5, 0)
+        objNode.position = SCNVector3Make(0, 5, -3)
         gmScene.rootNode.addChildNode(objNode)
-        let randforce = arc4random_uniform(2) == 1 ? -1 : 1
-        let force = SCNVector3(randforce, 15, 0)
-        objNode.physicsBody?.applyForce(force, at: SCNVector3(0.05, 0.05, 0.05), asImpulse: true)
+        let force = SCNVector3(0, 0, -14)
+        objNode.physicsBody?.applyForce(force, at: SCNVector3(0, 0.0, 0.0), asImpulse: true)
     }
     
     func rand_shape() -> SCNGeometry
@@ -148,7 +143,7 @@ class GameViewController: UIViewController, SCNSceneRendererDelegate {
         if time > t {
             add_objects()
             
-            t = time + 0.4
+            t = time + 0.05
         }
     }
     

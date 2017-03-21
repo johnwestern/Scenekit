@@ -13,8 +13,6 @@
 		793EBBA51E7EE35200CFCED5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 793EBBA31E7EE35200CFCED5 /* Main.storyboard */; };
 		793EBBA71E7EE35200CFCED5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 793EBBA61E7EE35200CFCED5 /* Assets.xcassets */; };
 		793EBBAA1E7EE35200CFCED5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 793EBBA81E7EE35200CFCED5 /* LaunchScreen.storyboard */; };
-		793EBBB51E7EE35300CFCED5 /* _D_sckitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793EBBB41E7EE35300CFCED5 /* _D_sckitTests.swift */; };
-		793EBBC01E7EE35300CFCED5 /* _D_sckitUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793EBBBF1E7EE35300CFCED5 /* _D_sckitUITests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,11 +42,7 @@
 		793EBBA91E7EE35200CFCED5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		793EBBAB1E7EE35200CFCED5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		793EBBB01E7EE35300CFCED5 /* 3D_sckitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = 3D_sckitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		793EBBB41E7EE35300CFCED5 /* _D_sckitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _D_sckitTests.swift; sourceTree = "<group>"; };
-		793EBBB61E7EE35300CFCED5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		793EBBBB1E7EE35300CFCED5 /* 3D_sckitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = 3D_sckitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		793EBBBF1E7EE35300CFCED5 /* _D_sckitUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _D_sckitUITests.swift; sourceTree = "<group>"; };
-		793EBBC11E7EE35300CFCED5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,8 +74,6 @@
 			isa = PBXGroup;
 			children = (
 				793EBB9C1E7EE35200CFCED5 /* 3D_sckit */,
-				793EBBB31E7EE35300CFCED5 /* 3D_sckitTests */,
-				793EBBBE1E7EE35300CFCED5 /* 3D_sckitUITests */,
 				793EBB9B1E7EE35200CFCED5 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -108,24 +100,6 @@
 				793EBBAB1E7EE35200CFCED5 /* Info.plist */,
 			);
 			path = 3D_sckit;
-			sourceTree = "<group>";
-		};
-		793EBBB31E7EE35300CFCED5 /* 3D_sckitTests */ = {
-			isa = PBXGroup;
-			children = (
-				793EBBB41E7EE35300CFCED5 /* _D_sckitTests.swift */,
-				793EBBB61E7EE35300CFCED5 /* Info.plist */,
-			);
-			path = 3D_sckitTests;
-			sourceTree = "<group>";
-		};
-		793EBBBE1E7EE35300CFCED5 /* 3D_sckitUITests */ = {
-			isa = PBXGroup;
-			children = (
-				793EBBBF1E7EE35300CFCED5 /* _D_sckitUITests.swift */,
-				793EBBC11E7EE35300CFCED5 /* Info.plist */,
-			);
-			path = 3D_sckitUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -275,7 +249,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				793EBBB51E7EE35300CFCED5 /* _D_sckitTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -283,7 +256,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				793EBBC01E7EE35300CFCED5 /* _D_sckitUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -522,6 +494,7 @@
 				793EBBC61E7EE35300CFCED5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		793EBBC71E7EE35300CFCED5 /* Build configuration list for PBXNativeTarget "3D_sckitTests" */ = {
 			isa = XCConfigurationList;
@@ -530,6 +503,7 @@
 				793EBBC91E7EE35300CFCED5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		793EBBCA1E7EE35300CFCED5 /* Build configuration list for PBXNativeTarget "3D_sckitUITests" */ = {
 			isa = XCConfigurationList;
@@ -538,6 +512,7 @@
 				793EBBCC1E7EE35300CFCED5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
