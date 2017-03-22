@@ -38,16 +38,21 @@ class GameViewController: UIViewController, SCNSceneRendererDelegate {
     
     func init_scene()
     {
-        gmScene = SCNScene(named: "art.scnassets/spaceship.scn")!
-        let model = gmScene.rootNode.childNode(withName: "pCube1", recursively: true)!
-        model.position = SCNVector3(0, 5, 0)
-        let targetPos = SCNVector3Make(model.position.x, 10, model.position.z + 20)
+        gmScene = SCNScene()
         gmView.scene = gmScene
         gmView.isPlaying = true
         gmCam = SCNNode()
         gmCam.camera = SCNCamera()
-        gmCam.position = targetPos
+        gmCam.position = SCNVector3Make(0, 10, 20)
         gmScene.rootNode.addChildNode(gmCam)
+        let ship_scene = SCNScene(named: "art.scnassets/smooth_sship.scn")
+        let ship = ship_scene?.rootNode.childNode(withName: "ship", recursively: true)!
+        let canette_scene = SCNScene(named: "art.scnassets/canette.scn")
+        let canette = canette_scene?.rootNode.childNode(withName: "canette", recursively: true)!
+        ship?.position = SCNVector3Make(0, 6, -1)
+        canette?.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
+        gmScene.rootNode.addChildNode(ship!)
+        gmScene.rootNode.addChildNode(canette!)
     }
     
     func add_plane()
