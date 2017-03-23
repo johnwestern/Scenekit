@@ -16,6 +16,7 @@ class GameViewController: UIViewController, SCNSceneRendererDelegate {
     var gmScene:SCNScene!
     var gmCam:SCNNode!
     var t:TimeInterval = 0
+    var t1:TimeInterval = 0
     
     override func viewDidLoad()
     {
@@ -141,6 +142,20 @@ class GameViewController: UIViewController, SCNSceneRendererDelegate {
         return randcolor
     }
     
+    func add_canette(time: TimeInterval)
+    {
+        if (time > t1)
+        {
+            let canette_scene = SCNScene(named: "art.scnassets/canette.scn")
+            let canette = canette_scene?.rootNode.childNode(withName: "canette", recursively: true)!
+            canette?.position = SCNVector3Make(0, 20, -8)
+            t1 = time + 10;
+            canette?.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
+            canette?.physicsBody?.mass = 3.5;
+            gmScene.rootNode.addChildNode(canette!)
+        }
+    }
+    
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval)
     {
         if time > t
@@ -149,6 +164,7 @@ class GameViewController: UIViewController, SCNSceneRendererDelegate {
             t = time + 0.01
             cleanup()
         }
+        add_canette(time: time)
     }
     
     func cleanup()
