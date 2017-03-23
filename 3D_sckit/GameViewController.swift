@@ -41,28 +41,29 @@ class GameViewController: UIViewController, SCNSceneRendererDelegate {
     
     func init_scene()
     {
-
         gmScene = SCNScene()
         gmView.scene = gmScene
         gmView.isPlaying = true
         gmCam = SCNNode()
         gmCam.camera = SCNCamera()
-        gmCam.position = SCNVector3Make(0, 10, 20)
+        gmCam.position = SCNVector3Make(0, 5, 15)
         gmScene.rootNode.addChildNode(gmCam)
     }
     
     func init_static_objects()
     {
-        let ship_scene = SCNScene(named: "art.scnassets/smooth_sship.scn")
+        let ship_scene = SCNScene(named: "art.scnassets/Avion.scn")
         let canette_scene = SCNScene(named: "art.scnassets/coca_can.scn")
-        let ship = ship_scene?.rootNode.childNode(withName: "ship", recursively: true)!
+        let ship = ship_scene?.rootNode.childNode(withName: "Avion", recursively: true)!
         let canette = canette_scene?.rootNode.childNode(withName: "canette", recursively: true)!
+        let lookat = SCNLookAtConstraint(target: canette)
         
-        ship?.position = SCNVector3Make(0, 6, -1)
+        ship?.position = SCNVector3Make(0, 5, 1)
         canette?.physicsBody = SCNPhysicsBody(type: .kinematic, shape: nil)
         canette?.name = "canette"
         gmScene.rootNode.addChildNode(ship!)
         gmScene.rootNode.addChildNode(canette!)
+        gmCam.constraints = [lookat]
     }
     
     func add_plane()
@@ -78,13 +79,20 @@ class GameViewController: UIViewController, SCNSceneRendererDelegate {
     func add_light()
     {
         let light = SCNNode()
+        let light2 = SCNNode()
 
         light.light = SCNLight()
         light.light?.type = SCNLight.LightType.spot
         light.position = SCNVector3Make(0, 80, 40)
         light.eulerAngles = SCNVector3Make(-89, 0, 0)
         light.light?.castsShadow = true
+        light2.light = SCNLight()
+        light2.light?.type = SCNLight.LightType.directional
+        light2.light?.intensity = 300
+        light2.position = SCNVector3Make(0, 1, -8)
+        light2.eulerAngles = SCNVector3Make(0, 0, 0)
         gmScene.rootNode.addChildNode(light)
+        gmScene.rootNode.addChildNode(light2)
     }
     
     func add_objects()
@@ -155,6 +163,7 @@ class GameViewController: UIViewController, SCNSceneRendererDelegate {
     {
         let moveTo = SCNAction.move(to: SCNVector3Make(0, 15, -8), duration: 2)
         let moveTo2 = SCNAction.move(to: SCNVector3Make(0, 3, -8), duration: 0.5)
+    
         for node in gmScene.rootNode.childNodes
         {
             if node.name == "canette"
@@ -169,8 +178,6 @@ class GameViewController: UIViewController, SCNSceneRendererDelegate {
                 }
             }
         }
-        
-       
     }
     
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval)
