@@ -133,7 +133,7 @@ class GameViewController: UIViewController, SCNSceneRendererDelegate {
     func rand_color() -> UIColor
     {
         var randcolor:UIColor!
-        let rand = arc4random_uniform(10)
+        let rand = arc4random_uniform(7)
 
         if rand == 0{
             randcolor = UIColor.clear
@@ -146,14 +146,8 @@ class GameViewController: UIViewController, SCNSceneRendererDelegate {
         }else if rand == 4{
             randcolor = UIColor.yellow
         }else if rand == 5{
-            randcolor = UIColor.black
-        }else if rand == 6{
-            randcolor = UIColor.white
-        }else if rand == 7{
             randcolor = UIColor.gray
-        }else if rand == 8{
-            randcolor = UIColor.cyan
-        }else if rand == 9{
+        }else if rand == 6{
             randcolor = UIColor.orange
         }
         return randcolor
