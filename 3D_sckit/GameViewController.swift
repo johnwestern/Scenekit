@@ -16,8 +16,7 @@ class GameViewController: UIViewController, SCNSceneRendererDelegate {
     var gmScene:SCNScene!
     var gmCam:SCNNode!
     var t:TimeInterval = 0
-    var t1:TimeInterval = 0
-    
+
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -26,8 +25,11 @@ class GameViewController: UIViewController, SCNSceneRendererDelegate {
         init_scene()
         add_plane()
         add_light()
+        init_static_objects()
     }
+    
 
+    
     func init_view()
     {
         gmView = self.view as! SCNView
@@ -39,6 +41,7 @@ class GameViewController: UIViewController, SCNSceneRendererDelegate {
     
     func init_scene()
     {
+
         gmScene = SCNScene()
         gmView.scene = gmScene
         gmView.isPlaying = true
@@ -46,12 +49,18 @@ class GameViewController: UIViewController, SCNSceneRendererDelegate {
         gmCam.camera = SCNCamera()
         gmCam.position = SCNVector3Make(0, 10, 20)
         gmScene.rootNode.addChildNode(gmCam)
+    }
+    
+    func init_static_objects()
+    {
         let ship_scene = SCNScene(named: "art.scnassets/smooth_sship.scn")
-        let ship = ship_scene?.rootNode.childNode(withName: "ship", recursively: true)!
         let canette_scene = SCNScene(named: "art.scnassets/canette.scn")
+        let ship = ship_scene?.rootNode.childNode(withName: "ship", recursively: true)!
         let canette = canette_scene?.rootNode.childNode(withName: "canette", recursively: true)!
+        
         ship?.position = SCNVector3Make(0, 6, -1)
-        canette?.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
+        canette?.physicsBody = SCNPhysicsBody(type: .kinematic, shape: nil)
+        canette?.name = "canette"
         gmScene.rootNode.addChildNode(ship!)
         gmScene.rootNode.addChildNode(canette!)
     }
@@ -72,7 +81,7 @@ class GameViewController: UIViewController, SCNSceneRendererDelegate {
 
         light.light = SCNLight()
         light.light?.type = SCNLight.LightType.spot
-        light.position = SCNVector3Make(0, 40, 20)
+        light.position = SCNVector3Make(0, 80, 40)
         light.eulerAngles = SCNVector3Make(-89, 0, 0)
         light.light?.castsShadow = true
         gmScene.rootNode.addChildNode(light)
@@ -142,18 +151,26 @@ class GameViewController: UIViewController, SCNSceneRendererDelegate {
         return randcolor
     }
     
-    func add_canette(time: TimeInterval)
+    func can_anim(time: TimeInterval)
     {
-        if (time > t1)
+        let moveTo = SCNAction.move(to: SCNVector3Make(0, 15, -8), duration: 2)
+        let moveTo2 = SCNAction.move(to: SCNVector3Make(0, 3, -8), duration: 0.5)
+        for node in gmScene.rootNode.childNodes
         {
-            let canette_scene = SCNScene(named: "art.scnassets/canette.scn")
-            let canette = canette_scene?.rootNode.childNode(withName: "canette", recursively: true)!
-            canette?.position = SCNVector3Make(0, 20, -8)
-            t1 = time + 10;
-            canette?.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
-            canette?.physicsBody?.mass = 3.5;
-            gmScene.rootNode.addChildNode(canette!)
+            if node.name == "canette"
+            {
+                let canette2 = node
+                
+                let tmp = time.truncatingRemainder(dividingBy: 8)
+                if (tmp < 5){
+                    canette2.runAction(moveTo)
+                }else if (tmp >= 5){
+                    canette2.runAction(moveTo2)
+                }
+            }
         }
+        
+       
     }
     
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval)
@@ -164,7 +181,7 @@ class GameViewController: UIViewController, SCNSceneRendererDelegate {
             t = time + 0.015
             cleanup()
         }
-        add_canette(time: time)
+        can_anim(time: time)
     }
     
     func cleanup()
