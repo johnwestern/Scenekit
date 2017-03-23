@@ -161,7 +161,7 @@ class GameViewController: UIViewController, SCNSceneRendererDelegate {
         if time > t
         {
             add_objects()
-            t = time + 0.02
+            t = time + 0.015
             cleanup()
         }
         add_canette(time: time)
